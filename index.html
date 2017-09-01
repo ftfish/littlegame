@@ -31,13 +31,14 @@
 			return (n * 1.2).toFixed(0);
 		}
 
-		function drawImg(parent, x, y, callback, id) {
+		function drawImg(parent, x, y, callback, id, number) {
 			var im = document.createElement("img");
 			im.src = "face.png";
 			if (callback) {
 				// console.log('has callback:', callback);
 				im.onclick = function() {callback(im); }
 			}
+			im.setAttribute("number", number);
 
 			im.style.width = im.style.height = imageSize + "px";
 			im.style.padding = imagePadding + "px";
@@ -73,11 +74,17 @@
 			}
 		}
 
+		function markWrong(node) {
+			node.style.padding = "0px";
+			node.style.border = imagePadding + "px" + " solid red";
+		}
+
 		function wrong(self) {
 			markCorrect();
 
-			self.style.padding = "0px";
-			self.style.border = imagePadding + "px" + " solid red";
+			var number =  self.getAttribute("number");
+			markWrong(document.getElementById("imgLeft_" + number));
+			markWrong(document.getElementById("imgRight_" + number));	
 		}
 
 		function correct(self) {
@@ -102,8 +109,8 @@
 			for (var i = 0; i < n; ++i) {
 				var x = Math.random() * scalex;
 				var y = Math.random() * scaley;
-				drawImg("left", x, y, wrong);
-				drawImg("right", x, y, wrong);
+				drawImg("left", x, y, wrong, "imgLeft_" + i, i);
+				drawImg("right", x, y, wrong, "imgRight_" + i, i);
 			}
 			var x = Math.random() * scalex;
 			var y = Math.random() * scaley;
