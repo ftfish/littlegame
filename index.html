@@ -67,8 +67,9 @@
 			console.log(correctNode.style);
 			console.log(correctNode.style.border);
 
-			for (var im of document.getElementsByTagName("img")) {
-				im.onclick = undefined;
+			images = document.getElementsByTagName("img");
+			for (var i = 0; i < images.length; ++i) {
+				images[i].onclick = undefined;
 			}
 		}
 
@@ -123,13 +124,13 @@
 
 <div style="text-align:center; width: 100%;">
 
-	<div id="left"" class="game_area">
+	<div id="left" class="game_area">
 	</div>
 
 	<div class="separator">
 	</div>
 
-	<div id="right"" class="game_area">
+	<div id="right" class="game_area">
 	</div>
 
 </div>
