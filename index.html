@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Game</title>
+	<style type="text/css">
+		.game_area {
+			width: 750px;
+			height: 700px;
+			position: relative;
+			/*border: 1px solid red;*/
+			display: inline-block;
+		}
+		.separator {
+			width:0px; 
+			height:500px;  
+			border:1px solid grey; 
+			margin: 100px 50px;
+			display: inline-block;"
+		}
+
+	</style>
+	<script type="text/javascript">
+
+		var nImg = 10;
+		var imageSize = 80;
+		var imagePadding = 10;
+		var delayAfterCompletion = 1000;
+		var currentMission = 1;
+
+		function newSize(n) {
+			return (n * 1.2).toFixed(0);
+		}
+
+		function drawImg(parent, x, y, callback, id) {
+			var im = document.createElement("img");
+			im.src = "face.png";
+			if (callback) {
+				// console.log('has callback:', callback);
+				im.onclick = function() {callback(im); }
+			}
+
+			im.style.width = im.style.height = imageSize + "px";
+			im.style.padding = imagePadding + "px";
+
+			var div = document.createElement("div");
+			div.style.width = div.style.height = imageSize + imagePadding * 2 + "px";
+			div.style.left = (x * 100).toFixed(2) + "%";
+			div.style.top = (y * 100).toFixed(2) + "%";
+			div.style.position = "absolute";
+			if (id) {
+				im.id = id;
+			}
+			div.appendChild(im);
+
+			document.getElementById(parent).appendChild(div);
+		}
+
+		function clearGame() {
+			document.getElementById("left").innerHTML = '';
+			document.getElementById("right").innerHTML = '';
+		}
+
+		function markCorrect() {
+			var correctNode = document.getElementById("correctImg");
+			correctNode.style.padding = "0px";
+			correctNode.style.border = imagePadding + "px" + " solid green";
+			console.log(correctNode.style);
+			console.log(correctNode.style.border);
+		}
+
+		function wrong(self) {
+			markCorrect();
+
+			self.style.padding = "0px";
+			self.style.border = imagePadding + "px" + " solid red";
+		}
+
+		function correct(self) {
+			markCorrect();
+			nImg = newSize(nImg);
+			++currentMission;
+
+			setTimeout(function(){startGame(nImg)}, delayAfterCompletion);
+		}
+
+		function startGame(n) {
+			clearGame();
+
+			document.getElementById("div_nImgs").innerHTML = "Mission " + currentMission + ": " + nImg + " faces";
+
+			var game_area_x = document.getElementById("left").offsetWidth;
+			var game_area_y = document.getElementById("left").offsetHeight;
+
+			var scalex = 1 - (imageSize + imagePadding * 2) / game_area_x;
+			var scaley = 1 - (imageSize + imagePadding * 2) / game_area_y;
+
+			for (var i = 0; i < n; ++i) {
+				var x = Math.random() * scalex;
+				var y = Math.random() * scaley;
+				drawImg("left", x, y, wrong);
+				drawImg("right", x, y, wrong);
+			}
+			var x = Math.random() * scalex;
+			var y = Math.random() * scaley;
+			drawImg("left", x, y, correct, "correctImg");
+		}
+
+	</script>
+</head>
+
+<body>
+
+<div style="text-align:center; margin: 20px 0px;">
+<button onclick="startGame(nImg)" style="width: 150px; height: 70px" >RESTART!</button> 
+<div id="div_nImgs" style="display:inline-block; margin: 20px"></div>
+</div>
+
+
+<div style="text-align:center; width: 100%;">
+
+	<div id="left"" class="game_area">
+	</div>
+
+	<div class="separator">
+	</div>
+
+	<div id="right"" class="game_area">
+	</div>
+
+</div>
+<script type="text/javascript">startGame(nImg)</script>
+
+</body>
+</html>
