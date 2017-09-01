@@ -66,6 +66,10 @@
 			correctNode.style.border = imagePadding + "px" + " solid green";
 			console.log(correctNode.style);
 			console.log(correctNode.style.border);
+
+			for (var im of document.getElementsByTagName("img")) {
+				im.onclick = undefined;
+			}
 		}
 
 		function wrong(self) {
