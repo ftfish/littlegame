@@ -57,8 +57,8 @@
 	<script type="text/javascript">
 
 		var nImg = 10;
-		var imageSize = 80;
-		var imagePadding = 10;
+		var imageSize = 60;
+		var imagePadding = 8;
 		var delayAfterCompletion = 1000;
 		var currentMission = 1;
 
@@ -77,15 +77,15 @@
 
 			im.style.width = im.style.height = imageSize + "px";
 			im.style.padding = imagePadding + "px";
+			if (id) {
+				im.id = id;
+			}
 
 			var div = document.createElement("div");
 			div.style.width = div.style.height = imageSize + imagePadding * 2 + "px";
 			div.style.left = (x * 100).toFixed(2) + "%";
 			div.style.top = (y * 100).toFixed(2) + "%";
 			div.style.position = "absolute";
-			if (id) {
-				im.id = id;
-			}
 			div.appendChild(im);
 
 			document.getElementById(parent).appendChild(div);
